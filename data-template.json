@@ -1,0 +1,39 @@
+{
+    "2013": {
+        "province": "ON",
+        "income": 0,
+        "monthly_savings_target": 0,
+        "rrsp": {
+            "gov_limit": -1,
+            "transactions": [
+                {
+                    "amount": -1,
+                    "date": "DD/MM/YYY"
+                }
+            ]
+        },
+        "tfsa": {
+            "gov_limit": -1,
+            "transactions": [
+                {
+                    "amount": -1,
+                    "date": "DD/MM/YYY"
+                }
+            ]
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": -1,
+                    "upper_bound": -1
+                }
+            },
+            "provincial": {
+                "1": {
+                    "percent": -1,
+                    "upper_bound": -1
+                }
+            }
+        }
+    }
+}
