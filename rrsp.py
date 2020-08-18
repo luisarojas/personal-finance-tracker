@@ -1,15 +1,18 @@
+import sys
 from functools import reduce
 import itertools
 import json
 from datetime import datetime
+import re
 
 tax_years = dict()
 
 class Transaction:
 
-    def __init__(self, amount, date):
+    def __init__(self, amount, date, description=''):
         self.amount = amount
         self.date = datetime.strptime(date, '%d/%m/%Y')
+        self.description = description
         
 class TaxYear:
 
@@ -29,11 +32,11 @@ class TaxYear:
             prev_years_withdrawals = tax_years[self.year-1].get_tfsa_withdrawals()
 
         summary_string = ''
-        summary_string += '\n{}:\n--------\n'.format(self.year)
+        summary_string += '{}:\n--------\n'.format(self.year)
         summary_string += 'Income: ${:,.2f}\n'.format(self.income)
         summary_string += '\nRRSP Available Room: ${:,.2f}\n'.format(self.get_rrsp_cumulated_room())
         summary_string += 'TFSA Available Room: ${:,.2f}\n'.format(self.get_tfsa_cumulated_room())
-        summary_string += 'Federal Taxes Due: ${:,.2f}\n'.format(fed_tax_due)
+        summary_string += '\nFederal Taxes Due: ${:,.2f}\n'.format(fed_tax_due)
         summary_string += 'Provincial ({}) Taxes Due: ${:,.2f}\n'.format(self.province, prov_tax_due)
         summary_string += 'Total Taxes Due: ${:,.2f}\n'.format(total_tax_due)
 
@@ -109,39 +112,165 @@ class TaxYear:
         return reduce(lambda sum, elem: sum + elem['tax due'], dict(itertools.islice(tax_brackets.items(), key)).values(), 0)
 
 
-if __name__ == '__main__':
+def subset_summary(start=None,end=None):
+
+    if start is None and end is None: start,end = 0,3000
+    elif start is not None and end is None: end = start
+
+    string = ''
+    for year, content in sorted(tax_years.items()):
+        if year >= start and year <= end: string += content.summary() + '\n'
+    return string
+
+def load_data(personal_file, public_file='public-data.json'):
+
+    print('loading data... ', end='')
+    try:
+        with open(personal_file) as f: personal_data = json.load(f)
+    except Exception as e: print('\n', e)
 
     try:
-        with open('data.json') as f:
-            data = json.load(f)
-    except Exception as e: print(e)
+        with open(public_file) as f: public_data = json.load(f)
+    except Exception as e: print('\n', e)
 
-    for year, content in data.items():
+    try:
+        for year, content in personal_data.items():
+            
+            new_year = TaxYear(int(year))
+            new_year.province = content['province']
+            new_year.income = content['income']
+            new_year.monthly_savings_target = content['monthly_savings_target']
+            new_year.rrsp_gov_limit = public_data[year]['rrsp']['gov_limit']
+            new_year.rrsp_transactions = []
+            new_year.tfsa_gov_limit = public_data[year]['tfsa']['gov_limit']
+            new_year.tfsa_transactions = []
+            new_year.federal_tax_brackets = dict()
+            new_year.provincial_tax_brackets = dict()
+
+            for contrubution in content['rrsp']['transactions']:
+                new_year.rrsp_transactions.append(Transaction(contrubution['amount'], contrubution['date'], contrubution['description']))
+
+            for contrubution in content['tfsa']['transactions']:
+                new_year.tfsa_transactions.append(Transaction(contrubution['amount'], contrubution['date'], contrubution['description']))
+
+            for key, bracket_content in public_data[year]['tax_brackets']['federal'].items():
+                new_year.federal_tax_brackets[int(key)] = bracket_content
+
+            for key, bracket_content in public_data[year]['tax_brackets']['provincial'][new_year.province].items():
+                new_year.provincial_tax_brackets[int(key)] = bracket_content
+            
+            tax_years[int(year)] = new_year
+    except Exception as e: print('\n', e)
+    print('done')
+
+
+def yearly_submenu(start,end=None):
+
+    while True:
+
+        print('\nYear{}: {}{}'.format('' if not end else 's' , start, '' if not end else (' to ' + str(end))))
+
+        print('1. Income ')
+        print('2. TFSA ')
+        print('3. RRSP ')
+        print('4. Taxes')
+        print('5. Brief summary')
+        print('\nPress \'b\' to select a different year or \'q\' to terminate\n')
+
+        user_input = input()
+        if user_input == 'b': break
+        elif user_input == 'q': sys.exit(0)
+
+        if not end: end = start
+
+        print()
+        print('-'*50)
+        if user_input == '1':
+            total = 0
+            for year in range(start, end+1):
+                print('{}: ${:,.2f}'.format(year, tax_years[year].income))
+                total += tax_years[year].income
+            print('\nTotal: ${:,.2f}'.format(total))
+
+        elif user_input == '2':
+            for year in range(start, end+1):
+                print('{}:'.format(year))
+                print('* Deposits: ${:,.2f}'.format(tax_years[year].get_tfsa_deposits()))
+                print('* Withdrawals: ${:,.2f}'.format(tax_years[year].get_tfsa_withdrawals()))
+                print('* Accumulated room: ${:,.2f}\n'.format(tax_years[year].get_tfsa_cumulated_room()))
+
+        elif user_input == '3':
+            for year in range(start, end+1):
+                print('{}:'.format(year))
+                print('* Income: ${:,.2f}'.format(tax_years[year].income))
+                print('* Contribution limit: ${:,.2f}'.format(tax_years[year].get_rrsp_contribution_limit_current_year()))
+                print('* Deposits: ${:,.2f}'.format(tax_years[year].get_rrsp_deposits()))
+                print('* Accumulated room: ${:,.2f}\n'.format(tax_years[year].get_rrsp_cumulated_room()))
+
+        elif user_input == '4':
+            total = 0
+            for year in range(start, end+1):
+                federal_tax = tax_years[year].tax_due(tax_years[year].federal_tax_brackets)
+                provincial_tax = tax_years[year].tax_due(tax_years[year].provincial_tax_brackets)
+                total += federal_tax + provincial_tax
+                print('{}:'.format(year))
+                print('* Income: ${:,.2f}'.format(tax_years[year].income))
+                print('* Federal tax: ${:,.2f}'.format(federal_tax))
+                print('* Provincial ({}) tax: ${:,.2f}'.format(tax_years[year].province, provincial_tax))
+                print('* Total tax: ${:,.2f}\n'.format(federal_tax + provincial_tax))
+
+            print('Total: ${:,.2f}'.format(total))
+
+        elif user_input == '5':
+            print(subset_summary(start, end))
+        print('-'*50)
+
+
+def yearly_menu():
+
+    start = None
+    end = None
+
+    while True:
+
+        print()
+        print('Enter a range (e.g. 2018-2020)')
+        print('Press \'b\' to back to the main menu or \'q\' to terminate\n')
+
+        user_input = input()
+        if user_input == 'b': break
+        elif user_input == 'q': sys.exit(0)
         
-        new_year = TaxYear(int(year))
-        new_year.province = content['province']
-        new_year.income = content['income']
-        new_year.monthly_savings_target = content['monthly_savings_target']
-        new_year.rrsp_gov_limit = content['rrsp']['gov_limit']
-        new_year.rrsp_transactions = []
-        new_year.tfsa_gov_limit = content['tfsa']['gov_limit']
-        new_year.tfsa_transactions = []
-        new_year.federal_tax_brackets = dict()
-        new_year.provincial_tax_brackets = dict()
+        pattern = re.compile('^(\d{4})(?:-(\d{4}))?$')
+        re_match = pattern.match(user_input)
 
-        for contrubution in content['rrsp']['transactions']:
-            new_year.rrsp_transactions.append(Transaction(contrubution['amount'], contrubution['date']))
+        if not (re_match):
+            print('This doesn\'t seem to be a valid range. Please try again.\n')
+            continue
 
-        for contrubution in content['tfsa']['transactions']:
-            new_year.tfsa_transactions.append(Transaction(contrubution['amount'], contrubution['date']))
+        if re_match.group(1): start = int(re_match.group(1))
+        if re_match.group(2): end = int(re_match.group(2))
 
-        for key, bracket_content in content['tax_brackets']['federal'].items():
-            new_year.federal_tax_brackets[int(key)] = bracket_content
+        yearly_submenu(start, end)
 
-        for key, bracket_content in content['tax_brackets']['provincial'].items():
-            new_year.provincial_tax_brackets[int(key)] = bracket_content
+if __name__ == '__main__':
+    
+    personal_file = 'data.json'
+    load_data(personal_file)
+
+    while True:
+
+        print()
+        print('1. Select specific year(s)')
+        print('2. See summary for all years')
+        print('\nPress \'q\' to terminate\n')
         
-        tax_years[int(year)] = new_year
+        user_input = input()
 
-for year, content in tax_years.items():
-    print(content.summary())
+        if user_input == '1': yearly_menu()
+        elif user_input == '2':
+            print('-'*50)
+            print(subset_summary())
+            print('-'*50)
+
+        if user_input == 'q': break
