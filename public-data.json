@@ -1,10 +1,66 @@
-{
+{   
+    "2021": {
+        "rrsp": {
+            "gov_limit": 27830
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": -1
+                },
+                "2": {
+                    "percent": 0.205,
+                    "upper_bound": -1
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": -1
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": -1
+                },
+                "5": {
+                    "percent": 0.33,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": -1
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": -1
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": -1
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": -1
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
     "2020": {
         "rrsp": {
             "gov_limit": 27230
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 5500
         },
         "tax_brackets": {
             "federal": {
@@ -60,7 +116,7 @@
             "gov_limit": 26500
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 6000
         },
         "tax_brackets": {
             "federal": {
@@ -116,7 +172,7 @@
             "gov_limit": 26230
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 5500
         },
         "tax_brackets": {
             "federal": {
@@ -180,7 +236,7 @@
             "gov_limit": 26010
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 5500
         },
         "tax_brackets": {
             "federal": {
@@ -236,7 +292,7 @@
             "gov_limit": 25370
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 5500
         },
         "tax_brackets": {
             "federal": {
@@ -292,7 +348,7 @@
             "gov_limit": 24930
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 10000
         },
         "tax_brackets": {
             "federal": {
@@ -344,7 +400,7 @@
             "gov_limit": 24270
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 5500
         },
         "tax_brackets": {
             "federal": {
@@ -396,7 +452,7 @@
             "gov_limit": 23820
         },
         "tfsa": {
-            "gov_limit": -1
+            "gov_limit": 5500
         },
         "tax_brackets": {
             "federal": {
