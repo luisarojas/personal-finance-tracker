@@ -1,0 +1,446 @@
+{
+    "2020": {
+        "rrsp": {
+            "gov_limit": 27230
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 48535
+                },
+                "2": {
+                    "percent": 0.205,
+                    "upper_bound": 97069
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 150473
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 214368
+                },
+                "5": {
+                    "percent": 0.33,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 44740
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 89482
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2019": {
+        "rrsp": {
+            "gov_limit": 26500
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 47630
+                },
+                "2": {
+                    "percent": 0.205,
+                    "upper_bound": 95259
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 147667
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 210371
+                },
+                "5": {
+                    "percent": 0.33,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 43906
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 87813
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2018": {
+        "rrsp": {
+            "gov_limit": 26230
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 46605
+                },
+                "2": {
+                    "percent": 0.205,
+                    "upper_bound": 93208
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 144489
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 205842
+                },
+                "5": {
+                    "percent": 0.33,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 42960
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 71500
+                    },
+                    "3": {
+                        "percent": 0.11,
+                        "upper_bound": 82000
+                    },
+                    "4": {
+                        "percent": 0.135,
+                        "upper_bound": 92000
+                    },
+                    "5": {
+                        "percent": 0.175,
+                        "upper_bound": 150000
+                    },
+                    "6": {
+                        "percent": 0.19,
+                        "upper_bound": 220000
+                    },
+                    "7": {
+                        "percent": 0.2053,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2017": {
+        "rrsp": {
+            "gov_limit": 26010
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 45916
+                },
+                "2": {
+                    "percent": 0.205,
+                    "upper_bound": 91831
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 142353
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 202800
+                },
+                "5": {
+                    "percent": 0.33,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 41201
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 84404
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2016": {
+        "rrsp": {
+            "gov_limit": 25370
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 45282
+                },
+                "2": {
+                    "percent": 0.205,
+                    "upper_bound": 90563
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 140388
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 200000
+                },
+                "5": {
+                    "percent": 0.33,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 41536
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 83075
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2015": {
+        "rrsp": {
+            "gov_limit": 24930
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 44701
+                },
+                "2": {
+                    "percent": 0.22,
+                    "upper_bound": 89401
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 138586
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 40922
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 81847
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2014": {
+        "rrsp": {
+            "gov_limit": 24270
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 43953
+                },
+                "2": {
+                    "percent": 0.22,
+                    "upper_bound": 87907
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 136270
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 40120
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 80242
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    },
+    "2013": {
+        "rrsp": {
+            "gov_limit": 23820
+        },
+        "tfsa": {
+            "gov_limit": -1
+        },
+        "tax_brackets": {
+            "federal": {
+                "1": {
+                    "percent": 0.15,
+                    "upper_bound": 43953
+                },
+                "2": {
+                    "percent": 0.22,
+                    "upper_bound": 87907
+                },
+                "3": {
+                    "percent": 0.26,
+                    "upper_bound": 136270
+                },
+                "4": {
+                    "percent": 0.29,
+                    "upper_bound": 0
+                }
+            },
+            "provincial": {
+                "ON": {
+                    "1": {
+                        "percent": 0.0505,
+                        "upper_bound": 40120
+                    },
+                    "2": {
+                        "percent": 0.0915,
+                        "upper_bound": 80242
+                    },
+                    "3": {
+                        "percent": 0.1116,
+                        "upper_bound": 150000
+                    },
+                    "4": {
+                        "percent": 0.1216,
+                        "upper_bound": 220000
+                    },
+                    "5": {
+                        "percent": 0.1316,
+                        "upper_bound": 0
+                    }
+                }
+            }
+        }
+    }
+}
