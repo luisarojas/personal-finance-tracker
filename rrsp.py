@@ -1,6 +1,7 @@
 from functools import reduce
 import itertools
 import json
+from datetime import datetime
 
 tax_years = dict()
 
@@ -8,7 +9,7 @@ class Transaction:
 
     def __init__(self, amount, date):
         self.amount = amount
-        self.date = date
+        self.date = datetime.strptime(date, '%d/%m/%Y')
         
 class TaxYear:
 
@@ -50,7 +51,7 @@ class TaxYear:
         return (self.get_rrsp_contribution_limit_current_year() + prev_years_room - curr_year_deposits)
 
     def get_rrsp_contribution_limit_current_year(self):
-        return min(self.income*0.18, self.rrsp_gov_set_limit)
+        return min(self.income*0.18, self.rrsp_gov_limit)
 
     def get_rrsp_deposits(self):
 
@@ -77,7 +78,7 @@ class TaxYear:
 
         curr_year_deposits = self.get_tfsa_deposits()
 
-        return (self.tfsa_gov_set_limit + prev_years_room + prev_years_withdrawals - curr_year_deposits)
+        return (self.tfsa_gov_limit + prev_years_room + prev_years_withdrawals - curr_year_deposits)
 
     def get_tfsa_withdrawals(self):
         tfsa_negative_transactions = list(filter(lambda x: x.amount < 0, self.tfsa_transactions ))
@@ -93,17 +94,17 @@ class TaxYear:
 
             income_portion = 0
             if key == 1:
-                income_portion = taxable_income if taxable_income < elem['upper'] else elem['upper']
+                income_portion = taxable_income if taxable_income < elem['upper_bound'] else elem['upper_bound']
             elif key == len(tax_brackets):
-                if taxable_income < tax_brackets[key-1]['upper']: income_portion = 0
-                elif taxable_income > tax_brackets[key-1]['upper']: income_portion = taxable_income - tax_brackets[key-1]['upper']
+                if taxable_income < tax_brackets[key-1]['upper_bound']: income_portion = 0
+                elif taxable_income > tax_brackets[key-1]['upper_bound']: income_portion = taxable_income - tax_brackets[key-1]['upper_bound']
             else:
-                if taxable_income < tax_brackets[key-1]['upper']: income_portion = 0
-                elif taxable_income < elem['upper']: income_portion = taxable_income - tax_brackets[key-1]['income portion']
-                else: income_portion = elem['upper']
+                if taxable_income < tax_brackets[key-1]['upper_bound']: income_portion = 0
+                elif taxable_income < elem['upper_bound']: income_portion = taxable_income - tax_brackets[key-1]['income portion']
+                else: income_portion = elem['upper_bound']
 
             elem['income portion'] = income_portion
-            elem['tax due'] = income_portion * elem['perc']
+            elem['tax due'] = income_portion * elem['percent']
         
         return reduce(lambda sum, elem: sum + elem['tax due'], dict(itertools.islice(tax_brackets.items(), key)).values(), 0)
 
@@ -121,23 +122,23 @@ if __name__ == '__main__':
         new_year.province = content['province']
         new_year.income = content['income']
         new_year.monthly_savings_target = content['monthly_savings_target']
-        new_year.rrsp_gov_set_limit = content['rrsp_gov_limit']
+        new_year.rrsp_gov_limit = content['rrsp']['gov_limit']
         new_year.rrsp_transactions = []
-        new_year.tfsa_gov_set_limit = content['tfsa_gov_limit']
+        new_year.tfsa_gov_limit = content['tfsa']['gov_limit']
         new_year.tfsa_transactions = []
         new_year.federal_tax_brackets = dict()
         new_year.provincial_tax_brackets = dict()
 
-        for contrubution in content['rrsp_transactions'].values():
+        for contrubution in content['rrsp']['transactions']:
             new_year.rrsp_transactions.append(Transaction(contrubution['amount'], contrubution['date']))
 
-        for contrubution in content['tfsa_transactions'].values():
+        for contrubution in content['tfsa']['transactions']:
             new_year.tfsa_transactions.append(Transaction(contrubution['amount'], contrubution['date']))
 
-        for key, bracket_content in content['federal_tax_brackets'].items():
+        for key, bracket_content in content['tax_brackets']['federal'].items():
             new_year.federal_tax_brackets[int(key)] = bracket_content
 
-        for key, bracket_content in content['provincial_tax_brackets'].items():
+        for key, bracket_content in content['tax_brackets']['provincial'].items():
             new_year.provincial_tax_brackets[int(key)] = bracket_content
         
         tax_years[int(year)] = new_year
