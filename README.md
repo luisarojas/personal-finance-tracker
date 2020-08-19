@@ -5,7 +5,7 @@
 
 ### Requirements:
 
-* Python 3.6+
+* `python 3.7+`
 
 ### How to execute
 

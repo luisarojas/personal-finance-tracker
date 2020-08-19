@@ -123,15 +123,24 @@ def subset_summary(start=None,end=None):
     return string
 
 def load_data(personal_file, public_file='public-data.json'):
+    
+    personal_data = None
+    public_data = None
 
     print('loading data... ', end='')
     try:
-        with open(personal_file) as f: personal_data = json.load(f)
-    except Exception as e: print('\n', e)
+        with open(personal_file) as f:
+            personal_data = json.load(f)
+    except Exception as e:
+        print('\n', e)
+        exit(0)
 
     try:
-        with open(public_file) as f: public_data = json.load(f)
-    except Exception as e: print('\n', e)
+        with open(public_file) as f:
+            public_data = json.load(f)
+    except Exception as e:
+        print('\n', e)
+        exit(0)
 
     try:
         for year, content in personal_data.items():
@@ -253,16 +262,13 @@ def yearly_menu():
 
         yearly_submenu(start, end)
 
-if __name__ == '__main__':
-    
-    personal_file = 'data.json'
-    load_data(personal_file)
-
+def main_menu():
     while True:
 
         print()
         print('1. Select specific year(s)')
         print('2. See summary for all years')
+        print('3. Enter a transaction')
         print('\nPress \'q\' to terminate\n')
         
         user_input = input()
@@ -274,3 +280,10 @@ if __name__ == '__main__':
             print('-'*50)
 
         if user_input == 'q': break
+
+if __name__ == '__main__':
+    
+    personal_file = 'data.json'
+    load_data(personal_file)
+    main_menu()
+    
