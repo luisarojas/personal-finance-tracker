@@ -3,6 +3,8 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/luisarojas/personal-finance-tracker) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/luisarojas/personal-finance-tracker) ![GitHub last commit](https://img.shields.io/github/last-commit/luisarojas/personal-finance-tracker) ![GitHub issues](https://img.shields.io/github/issues-raw/luisarojas/personal-finance-tracker)
 
+⚠️  This project is currently a work in progress and is currently in its early development stage<br><br>
+
 ### Requirements:
 
 * `python 3.7+`
